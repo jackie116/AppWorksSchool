@@ -1,5 +1,4 @@
 //Object-Oriented Swift
-
 //1
 class Animal {
     enum Gender {
@@ -65,6 +64,7 @@ enum Gasoline: String {
     case oil92 = "92"
     case oil95 = "95"
     case oil98 = "98"
+    case diesel = "diesel"
     
     func getPrice() -> String{
         switch self {
@@ -74,14 +74,17 @@ enum Gasoline: String {
             return "Price of 95"
         case .oil98:
             return "Price of 98"
+        case .diesel:
+            return "Price of diesel"
         }
     }
 }
+
 /** enum associated value can used to store additional information, like : case oil92(price: Double)*/
 //2
 
 class Pet {
-    var name: String
+    let name: String
     
     init(name: String) {
         self.name = name
@@ -90,11 +93,32 @@ class Pet {
 
 class People {
     var pet: Pet?
+    
+    init() {
+    }
 }
 
-var Jackie = People()
+let Jackie = People()
+Jackie.pet = Pet(name: "cat")
 
-var Ken = People()
+func guardPet(people: People) {
+    guard let pet = people.pet else {
+        return
+    }
+    print("Pet's name is \(pet.name)")
+}
+guardPet(people: Jackie)
+
+let Ken = People()
+Ken.pet = Pet(name: "dog")
+
+func ifPet(people: People) {
+    if let pet = people.pet {
+        print("Pet's name is \(pet.name)")
+    }
+}
+
+ifPet(people: Ken)
 
 //Protocol in Swift
 //1
@@ -120,14 +144,11 @@ protocol ToolMan {
 }
 
 //4
-struct Person: PoliceMan, ToolMan{
+struct Person: PoliceMan{
     let name: String
     var toolman: ToolMan
     func arrestCriminals() {
         print("Police man is the person who arrest criminals.")
-    }
-    func fixComputer() {
-        print("Tool man can fix computer.")
     }
 }
 
@@ -139,7 +160,7 @@ struct Engineer: ToolMan {
 }
 
 //6
-var Steven:PoliceMan, Toolman = Person(name: "Steven", toolman: Engineer)
+var Steven: PoliceMan = Person(name: "Steven", toolman: Engineer())
 
 //Error handling in Swift
 enum GuessNumberGameError: Error {
@@ -156,4 +177,9 @@ class GuessNumerGame {
 }
 
 var guessnumbergame = GuessNumerGame()
-try guessnumbergame.guess(number: 10)
+do {
+    try guessnumbergame.guess(number: 20)
+}catch{
+    print("Guess the wrong number")
+}
+
