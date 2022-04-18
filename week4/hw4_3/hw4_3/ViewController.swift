@@ -14,7 +14,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var stationAddressLabel: UILabel!
     
     
-    struct station: Codable {
+    struct Station: Codable {
         let stationID: String
         let stationName: String
         let stationAddress: String
@@ -27,7 +27,7 @@ class ViewController: UIViewController {
                 
                 do {
                     let decoder = JSONDecoder()
-                    let searchResponse = try decoder.decode(station.self, from: data)
+                    let searchResponse = try decoder.decode(Station.self, from: data)
                     
                     DispatchQueue.main.async {
                         self.stationIDLabel.text = searchResponse.stationID
